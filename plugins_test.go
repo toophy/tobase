@@ -14,6 +14,6 @@ func TestPlugins(t *testing.T) {
 	ret := pls.GetName(plsa)
 	println(ret)
 
-	retp := pls.GetPlugin("plugina")
+	retp := pls.GetPlugin("Plugina")
 	println(retp.Name())
 }

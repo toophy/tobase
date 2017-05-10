@@ -1,9 +1,11 @@
 // Package tobase 基础插件类练习
 package tobase
 
+import "errors"
+
 // Plugins 插件注册表
 type Plugins struct {
-	ps []IPlugin
+	ps map[string]IPlugin
 }
 
 // GetName 获取插件名称
@@ -20,6 +22,32 @@ func (p *Plugins) DoInit(plugin IPlugin) error {
 
 // DoEat 做动作 : 吃
 func (p *Plugins) DoEat() error {
+	return nil
+}
+
+// InitPlugins 初始化插件注册表
+func (p *Plugins) InitPlugins() error {
+	p.ps = make(map[string]IPlugin, 0)
+	return nil
+}
+
+// RegistePlugin 注册插件
+func (p *Plugins) RegistePlugin(plugin IPlugin) error {
+	if plugin != nil && plugin.Name() != "" {
+		if _, ok := p.ps[plugin.Name()]; !ok {
+			p.ps[plugin.Name()] = plugin
+			return nil
+		}
+	}
+
+	return errors.New("Invalid plugin name")
+}
+
+// GetPlugin 通过名称获取插件
+func (p *Plugins) GetPlugin(name string) IPlugin {
+	if _, ok := p.ps[name]; ok {
+		return p.ps[name]
+	}
 	return nil
 }
 
