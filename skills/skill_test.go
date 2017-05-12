@@ -7,8 +7,8 @@ import (
 )
 
 func TestSingleSkill(t *testing.T) {
-	rA := &Role{"A", 100, 5, 3, false}
-	rB := &Role{"B", 100, 3, 5, false}
+	rA := &Role{"A", 100, 5, 3, 0, 0, false}
+	rB := &Role{"B", 100, 3, 5, 0, 0, false}
 	sKA := &SkillInfo{"神龙摆尾", 35, 30}
 	sKB := &SkillInfo{"打狗棒法", 28, 40}
 
