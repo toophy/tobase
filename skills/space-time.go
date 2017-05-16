@@ -104,39 +104,6 @@ func (a *ActorMove) Run(t float32) bool {
 	return false
 }
 
-// IActorFsmState Actor有限状态接口
-type IActorFsmState interface {
-	// Check 检查能否进入状态
-	Check(data interface{}) bool
-	// OnEnter 进入状态
-	OnEnter(data interface{})
-	// OnLeave 离开状态
-	OnLeave(data interface{})
-	// OnRun 正在状态中
-	OnRun(data interface{})
-}
-
-// ActorWalk
-type ActorWalk struct {
-}
-
-// Check 检查能否进入状态
-func (a *ActorWalk) Check(data interface{}) bool {
-	return false
-}
-
-// OnEnter 进入状态
-func (a *ActorWalk) OnEnter(data interface{}) {
-}
-
-// OnLeave 离开状态
-func (a *ActorWalk) OnLeave(data interface{}) {
-}
-
-// OnRun 正在状态中
-func (a *ActorWalk) OnRun(data interface{}) {
-}
-
 // NewRole 新角色,包容所有角色,配备插件
 type NewRole struct {
 }
