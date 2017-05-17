@@ -1,6 +1,8 @@
 package behaviortree
 
 import "testing"
+import "encoding/json"
+import "encoding/xml"
 
 //
 const (
@@ -68,10 +70,95 @@ func CreateBehaviorTree(a *Agent) *Tree {
 }
 
 func TestMonster(t *testing.T) {
+	// 	treeACnf := `
+	// {
+	//   "Childs": [
+	//     {
+	//       "Childs": [
+	//         {
+	//           "Name": "血量低",
+	//           "AttrIdx": 1,
+	//           "Operator": 2,
+	//           "Value": 10
+	//         },
+	//         {
+	//           "Name": "血量压制",
+	//           "AttrIdx": 1,
+	//           "Operator": 1,
+	//           "Value": 50
+	//         },
+	//         {
+	//           "Name": "逃离"
+	//         }
+	//       ]
+	//     },
+	//     {
+	//       "Childs": [
+	//         {
+	//           "Name": "目标超出攻击范围",
+	//           "Operator": 2,
+	//           "Value": 10
+	//         },
+	//         {
+	//           "Name": "目标在追击范围",
+	//           "Operator": 1,
+	//           "Value": 30
+	//         },
+	//         {
+	//           "Name": "追击"
+	//         }
+	//       ]
+	//     }
+	//   ]
+	// }`
+	// 	treeAXmlCnf = `
+	// <Tree>
+	//   <Childs>
+	//     <Childs>
+	//       <Name>血量低</Name>
+	//       <AttrIdx>1</AttrIdx>
+	//       <Operator>2</Operator>
+	//       <Value>10</Value>
+	//     </Childs>
+	//     <Childs>
+	//       <Name>血量压制</Name>
+	//       <AttrIdx>1</AttrIdx>
+	//       <Operator>1</Operator>
+	//       <Value>50</Value>
+	//     </Childs>
+	//     <Childs>
+	//       <Name>逃离</Name>
+	//     </Childs>
+	//   </Childs>
+	//   <Childs>
+	//     <Childs>
+	//       <Name>目标超出攻击范围</Name>
+	//       <Operator>2</Operator>
+	//       <Value>10</Value>
+	//     </Childs>
+	//     <Childs>
+	//       <Name>目标在追击范围</Name>
+	//       <Operator>1</Operator>
+	//       <Value>30</Value>
+	//     </Childs>
+	//     <Childs>
+	//       <Name>追击</Name>
+	//     </Childs>
+	//   </Childs>
+	// </Tree>
+	// 	`
 	agentA := CreateAgent("A", 100, 20, 15)
 	agentB := CreateAgent("B", 100, 25, 10)
 
 	treeA := CreateBehaviorTree(agentA)
 	treeB := CreateBehaviorTree(agentB)
 
+	treeAjson, _ := json.MarshalIndent(treeA, "", "  ")
+	println(string(treeAjson))
+
+	treeBjson, _ := json.MarshalIndent(treeB, "", "  ")
+	println(string(treeBjson))
+
+	treeAXml, _ := xml.MarshalIndent(treeA, "", "  ")
+	println(string(treeAXml))
 }

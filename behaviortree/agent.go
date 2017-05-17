@@ -11,6 +11,7 @@ type Agent struct {
 	Attrs   []int64
 	CurrPos Vec3
 	Target  *Agent
+	Stacks  TreeStack
 }
 
 // GetName 名称
@@ -51,4 +52,24 @@ func (a *Agent) SetValue(i int, v int64) {
 	if a.CheckAttr(i) {
 		a.Attrs[i-1] = v
 	}
+}
+
+// TreeStack 行为树内存栈
+// 1. 行为树名称
+// 2. 执行的层数
+// 3. 第一层, 运行状态, 数组下标, 参数
+// 4. 第二层, 运行状态, 数组下标, 参数
+// 5. ...
+type TreeStack struct {
+	Running  bool
+	MyAgent  *Agent
+	TreeName string
+	Layers   []TreeStackLayer
+}
+
+// TreeStackLayer 行为树栈层
+type TreeStackLayer struct {
+	Running bool
+	Idx     int
+	Params  []interface{}
 }
