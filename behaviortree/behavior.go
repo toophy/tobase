@@ -1,27 +1,30 @@
 package behaviortree
 
-// 控制节点
-//   1. 串行节点
-//   2. 并行节点
-//   3. 串行找到一个可行节点
-//   4. 选择节点
-//   5. 描述节点
-// 前提条件
-//   1. 进入节点的条件
-// 动作节点
-//   1. 入住节点后执行的动作
-//
-// Agent
-//    节点和外界的代理(数据Input和Output的代理), 减少耦合
-//
+// Tree 行为树
+type Tree struct {
+	Node
+	MyAgent *Agent
+}
 
-//
-//  1. composite       组合
-//     1.1 Sequence    顺序     有多个子节点
-//  2. decorator       修饰     它有且只有一个子节点, 将子节点的结果传递给父节点, 停止, 重复子节点, 比如 Inverter(反相器,NOT)
-//  3. Leaf            叶子     没有子节点
-//
-// 用游戏代码去类比，可以将合成和修饰节点当作函数、、分支结构和循环结构，
-// 还有其它编程语言的结构，用它们来定义你代码的逻辑。
-// 而叶子节点就像游戏中具体的代码逻辑，
-// 会让你的AI角色做一些实际上的事情或者检测它们的状态或场景
+// Load 加载
+func (b *Tree) Load() bool {
+	return true
+}
+
+// Save 保存
+func (b *Tree) Save() bool {
+	return true
+}
+
+// OnEnter 响应登录
+func (b *Tree) OnEnter(a *Agent) {
+}
+
+// OnLeave 响应离开
+func (b *Tree) OnLeave(a *Agent) {
+}
+
+// OnRun 响应刷新
+func (b *Tree) OnRun(a *Agent) bool {
+	return true
+}
