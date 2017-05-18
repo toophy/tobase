@@ -1,0 +1,40 @@
+	{
+	  "Childs": [
+	    {
+	      "Childs": [
+	        {
+	          "Name": "血量低",
+	          "AttrIdx": 1,
+	          "Operator": 2,
+	          "Value": 10
+	        },
+	        {
+	          "Name": "血量压制",
+	          "AttrIdx": 1,
+	          "Operator": 1,
+	          "Value": 50
+	        },
+	        {
+	          "Name": "逃离"
+	        }
+	      ]
+	    },
+	    {
+	      "Childs": [
+	        {
+	          "Name": "目标超出攻击范围",
+	          "Operator": 2,
+	          "Value": 10
+	        },
+	        {
+	          "Name": "目标在追击范围",
+	          "Operator": 1,
+	          "Value": 30
+	        },
+	        {
+	          "Name": "追击"
+	        }
+	      ]
+	    }
+	  ]
+	}
