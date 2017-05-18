@@ -156,6 +156,12 @@ func TestMonster(t *testing.T) {
 	treeAjson, _ := json.MarshalIndent(treeA, "", "  ")
 	println(string(treeAjson))
 
+	nTreeA := new(Tree)
+	json.Unmarshal(treeAjson, nTreeA)
+
+	treeAJson2, _ := json.MarshalIndent(nTreeA, "", "  ")
+	println(string(treeAJson2))
+
 	treeBjson, _ := json.MarshalIndent(treeB, "", "  ")
 	println(string(treeBjson))
 
