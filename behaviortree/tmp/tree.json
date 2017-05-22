@@ -1,51 +1,7 @@
 {
   "ID": 100000,
   "Childs": [
-    {
-      "ID": 1000,
-      "Childs": [
-        {
-          "ID": 1001,
-          "Name": "",
-          "AttrIdx": 0,
-          "Operator": 0,
-          "Value": 0
-        },
-        {
-          "ID": 1002,
-          "Name": "",
-          "AttrIdx": 0,
-          "Operator": 0,
-          "Value": 0
-        },
-        {
-          "ID": 1003,
-          "Name": ""
-        }
-      ]
-    },
-    {
-      "ID": 2000,
-      "Childs": [
-        {
-          "ID": 2001,
-          "Name": "",
-          "AttrIdx": 0,
-          "Operator": 0,
-          "Value": 0
-        },
-        {
-          "ID": 2002,
-          "Name": "",
-          "AttrIdx": 0,
-          "Operator": 0,
-          "Value": 0
-        },
-        {
-          "ID": 2003,
-          "Name": ""
-        }
-      ]
-    }
+    null,
+    null
   ]
 }

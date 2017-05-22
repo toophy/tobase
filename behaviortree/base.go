@@ -201,29 +201,29 @@ func (n *NodeLeaf) PopNode(c INode) bool {
 	return false
 }
 
-// UnmarshalJSON 反序列化JSON为对象
-func (n *NodeLeaf) UnmarshalJSON(b []byte) error {
-	var objMap map[string]*json.RawMessage
-	err := json.Unmarshal(b, &objMap)
-	if err != nil {
-		return err
-	}
+// // UnmarshalJSON 反序列化JSON为对象
+// func (n *NodeLeaf) UnmarshalJSON(b []byte) error {
+// 	var objMap map[string]*json.RawMessage
+// 	err := json.Unmarshal(b, &objMap)
+// 	if err != nil {
+// 		return err
+// 	}
 
-	var rawID *json.RawMessage
-	err = json.Unmarshal(*objMap["ID"], &rawID)
-	if err != nil {
-		return err
-	}
-	var mID interface{}
-	err = json.Unmarshal(*rawID, &mID)
-	if err != nil {
-		return err
-	}
+// 	var rawID *json.RawMessage
+// 	err = json.Unmarshal(*objMap["ID"], &rawID)
+// 	if err != nil {
+// 		return err
+// 	}
+// 	var mID interface{}
+// 	err = json.Unmarshal(*rawID, &mID)
+// 	if err != nil {
+// 		return err
+// 	}
 
-	nodeID, _ := strconv.ParseInt(mID.(string), 10, 32)
-	n.ID = int32(nodeID)
-	return nil
-}
+// 	nodeID, _ := strconv.ParseInt(mID.(string), 10, 32)
+// 	n.ID = int32(nodeID)
+// 	return nil
+// }
 
 // GetID 获取节点唯一编号
 func (n *NodeLeaf) GetID() int32 {
