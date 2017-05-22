@@ -1,6 +1,9 @@
 package behaviortree
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"strconv"
+)
 
 // 控制节点
 //   1. 串行节点
@@ -59,21 +62,24 @@ import "encoding/json"
 
 // INode 行为树节点接口
 type INode interface {
-	IsRunning() bool
+	IsRunning(a *Agent) bool
 	OnEnter(a *Agent)
 	OnLeave(a *Agent)
 	OnRun(a *Agent) bool
+	GetID() int32
 }
 
 // Node 节点基础
 type Node struct {
-	Running bool
-	Childs  []INode
+	ID     int32
+	Root   INode `json:"-"`
+	Prev   INode `json:"-"`
+	Childs []INode
 }
 
 // IsRunning 正在运行中
-func (n *Node) IsRunning() bool {
-	return n.Running
+func (n *Node) IsRunning(a *Agent) bool {
+	return a.IsNodeRunning(n.Root.GetID(), n.ID)
 }
 
 // PushNode 增加节点
@@ -113,20 +119,38 @@ func (n *Node) UnmarshalJSON(b []byte) error {
 	if err != nil {
 		return err
 	}
-	var rawMessagesForColoredThings []*json.RawMessage
-	err = json.Unmarshal(*objMap["Childs"], &rawMessagesForColoredThings)
+
+	var rawID *json.RawMessage
+	err = json.Unmarshal(*objMap["ID"], &rawID)
+	if err != nil {
+		return err
+	}
+	var mID interface{}
+	err = json.Unmarshal(*rawID, &mID)
 	if err != nil {
 		return err
 	}
 
-	n.Childs = make([]INode, len(rawMessagesForColoredThings))
+	nodeID, _ := strconv.ParseInt(mID.(string), 10, 32)
+	n.ID = int32(nodeID)
 
-	for index, rawMessage := range rawMessagesForColoredThings {
+	var rawChilds []*json.RawMessage
+	err = json.Unmarshal(*objMap["Childs"], &rawChilds)
+	if err != nil {
+		return err
+	}
+
+	n.Childs = make([]INode, len(rawChilds))
+
+	for index, rawMessage := range rawChilds {
 		var m map[string]interface{}
 		err = json.Unmarshal(*rawMessage, &m)
 		if err != nil {
 			return err
 		}
+
+		//fmt.Printf("%-v", m)
+		//fmt.Printf("%s", string(*rawMessage))
 
 		p := gNodeCreators[m["type"].(string)]()
 		err := json.Unmarshal(*rawMessage, &p)
@@ -138,6 +162,82 @@ func (n *Node) UnmarshalJSON(b []byte) error {
 	}
 
 	return nil
+}
+
+// GetID 获取节点唯一编号
+func (n *Node) GetID() int32 {
+	return n.ID
+}
+
+// GetRoot 获取树根
+func (n *Node) GetRoot() INode {
+	return n.Root
+}
+
+// GetPrev 获取父节点
+func (n *Node) GetPrev() INode {
+	return n.Prev
+}
+
+// NodeLeaf 叶子节点基础
+type NodeLeaf struct {
+	ID   int32
+	Root INode `json:"-"`
+	Prev INode `json:"-"`
+}
+
+// IsRunning 正在运行中
+func (n *NodeLeaf) IsRunning(a *Agent) bool {
+	return a.IsNodeRunning(n.Root.GetID(), n.ID)
+}
+
+// PushNode 增加节点
+func (n *NodeLeaf) PushNode(c INode) bool {
+	return false
+}
+
+// PopNode 删除节点
+func (n *NodeLeaf) PopNode(c INode) bool {
+	return false
+}
+
+// UnmarshalJSON 反序列化JSON为对象
+func (n *NodeLeaf) UnmarshalJSON(b []byte) error {
+	var objMap map[string]*json.RawMessage
+	err := json.Unmarshal(b, &objMap)
+	if err != nil {
+		return err
+	}
+
+	var rawID *json.RawMessage
+	err = json.Unmarshal(*objMap["ID"], &rawID)
+	if err != nil {
+		return err
+	}
+	var mID interface{}
+	err = json.Unmarshal(*rawID, &mID)
+	if err != nil {
+		return err
+	}
+
+	nodeID, _ := strconv.ParseInt(mID.(string), 10, 32)
+	n.ID = int32(nodeID)
+	return nil
+}
+
+// GetID 获取节点唯一编号
+func (n *NodeLeaf) GetID() int32 {
+	return n.ID
+}
+
+// GetRoot 获取树根
+func (n *NodeLeaf) GetRoot() INode {
+	return n.Root
+}
+
+// GetPrev 获取父节点
+func (n *NodeLeaf) GetPrev() INode {
+	return n.Prev
 }
 
 type funcCreateNode func() INode // 声明了一个函数类型

@@ -18,6 +18,7 @@ const (
 // CondAttr 条件:属性条件
 // --------------------------------------------------------
 type CondAttr struct {
+	NodeLeaf
 	Name     string
 	AttrIdx  int
 	Operator int
@@ -29,11 +30,6 @@ func init() {
 	AppendNodeCreator("CondAttrTarget", func() INode { return new(CondAttrTarget) })
 	AppendNodeCreator("CondAttrCompare", func() INode { return new(CondAttrCompare) })
 	AppendNodeCreator("CondAttrPosCompare", func() INode { return new(CondAttrPosCompare) })
-}
-
-// IsRunning 正在运行中
-func (s *CondAttr) IsRunning() bool {
-	return false
 }
 
 // OnEnter 响应登录
@@ -66,15 +62,11 @@ func (s *CondAttr) OnRun(a *Agent) bool {
 // CondAttrTarget 条件:目标属性条件
 // --------------------------------------------------------
 type CondAttrTarget struct {
+	NodeLeaf
 	Name     string
 	AttrIdx  int
 	Operator int
 	Value    int64
-}
-
-// IsRunning 正在运行中
-func (s *CondAttrTarget) IsRunning() bool {
-	return false
 }
 
 // OnEnter 响应登录
@@ -112,15 +104,11 @@ func (s *CondAttrTarget) OnRun(a *Agent) bool {
 // CondAttrCompare 条件:自己和目标属性条件(互相比较)
 // --------------------------------------------------------
 type CondAttrCompare struct {
+	NodeLeaf
 	Name     string
 	AttrIdx  int
 	Operator int
 	Value    int64
-}
-
-// IsRunning 正在运行中
-func (s *CondAttrCompare) IsRunning() bool {
-	return false
 }
 
 // OnEnter 响应登录
@@ -158,14 +146,10 @@ func (s *CondAttrCompare) OnRun(a *Agent) bool {
 // CondAttrPosCompare 条件:自己和目标距离条件(互相比较)
 // --------------------------------------------------------
 type CondAttrPosCompare struct {
+	NodeLeaf
 	Name     string
 	Operator int
 	Value    int64
-}
-
-// IsRunning 正在运行中
-func (s *CondAttrPosCompare) IsRunning() bool {
-	return false
 }
 
 // OnEnter 响应登录

@@ -1,9 +1,6 @@
 package behaviortree
 
 import (
-	"encoding/json"
-	"fmt"
-	"io/ioutil"
 	"os"
 	"testing"
 )
@@ -24,52 +21,7 @@ func CreateAgent(name string, hp int64, phyata int64, phydef int64) *Agent {
 }
 
 func CreateBehaviorTree(a *Agent) *Tree {
-	t := &Tree{MyAgent: a}
-
-	// 逃离 : and
-	taoLiSeq := &Sequence{}
-	t.PushNode(taoLiSeq)
-	{
-		// 逃离条件组合 : or
-		taoLiCondSel := &Selector{}
-		taoLiSeq.PushNode(taoLiCondSel)
-		{
-			// 逃离 : 条件1 : 血量<10
-			taoLiCond := &CondAttr{"血量低", AttrHP, CondAttrLq, 10}
-			taoLiSeq.PushNode(taoLiCond)
-
-			// 逃离 : 条件2 : 自己血量+50<对方血量
-			taoLiCond2 := &CondAttrCompare{"血量压制", AttrHP, CondAttrLt, 50}
-			taoLiSeq.PushNode(taoLiCond2)
-		}
-
-		// 逃离 : 动作节点
-		taoLiAction := &Action{false, "逃离"}
-		taoLiSeq.PushNode(taoLiAction)
-	}
-
-	// 追击 : and
-	zhuiSeq := &Sequence{}
-	t.PushNode(zhuiSeq)
-	{
-		// 追击条件组合 : or
-		zhuiCondSel := &Selector{}
-		zhuiSeq.PushNode(zhuiCondSel)
-		{
-			// 追击 : 条件1 : 距离<10
-			taoLiCond := &CondAttrPosCompare{"目标超出攻击范围", CondAttrLq, 10}
-			zhuiSeq.PushNode(taoLiCond)
-
-			// 追击 : 条件2 : 自己距离+50<对方血量
-			taoLiCond2 := &CondAttrPosCompare{"目标在追击范围", CondAttrLt, 30}
-			zhuiSeq.PushNode(taoLiCond2)
-		}
-
-		// 追击 : 动作节点
-		zhuiAction := &Action{false, "追击"}
-		zhuiSeq.PushNode(zhuiAction)
-	}
-
+	t := &Tree{}
 	return t
 }
 
@@ -84,15 +36,6 @@ func TestMonster(t *testing.T) {
 
 	treeA := CreateBehaviorTree(agentA)
 
-	conf := "tree.json"
-
-	b, _ := ioutil.ReadFile("./doc/" + conf)
-	err := json.Unmarshal(b, &treeA)
-	if err != nil {
-		fmt.Printf("init scs %s", err.Error())
-	}
-
-	treeAJSON, _ := json.MarshalIndent(treeA, "", "  ")
-	println(string(treeAJSON))
-	ioutil.WriteFile("heh.json", treeAJSON, 0)
+	treeA.Load("./doc/tree.json")
+	treeA.Save("./tmp/tree.json")
 }

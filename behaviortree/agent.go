@@ -59,6 +59,11 @@ func (a *Agent) GetStack() *TreeStack {
 	return &a.Stacks
 }
 
+// IsNodeRunning 获取一棵正在使用的行为树的一个节点的运行状态
+func (a *Agent) IsNodeRunning(rootID, currID int32) bool {
+	return false
+}
+
 // TreeStack 行为树内存栈
 // 1. 行为树名称
 // 2. 执行的层数

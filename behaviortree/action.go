@@ -11,13 +11,8 @@ func init() {
 // Action 动作:叶子
 // -------------------------------------------------------------
 type Action struct {
-	Running bool
-	Name    string
-}
-
-// IsRunning 正在运行中
-func (s *Action) IsRunning() bool {
-	return s.Running
+	NodeLeaf
+	Name string
 }
 
 // OnEnter 响应登录
