@@ -24,6 +24,13 @@ type CondAttr struct {
 	Value    int64
 }
 
+func init() {
+	AppendNodeCreator("CondAttr", func() INode { return new(CondAttr) })
+	AppendNodeCreator("CondAttrTarget", func() INode { return new(CondAttrTarget) })
+	AppendNodeCreator("CondAttrCompare", func() INode { return new(CondAttrCompare) })
+	AppendNodeCreator("CondAttrPosCompare", func() INode { return new(CondAttrPosCompare) })
+}
+
 // IsRunning 正在运行中
 func (s *CondAttr) IsRunning() bool {
 	return false

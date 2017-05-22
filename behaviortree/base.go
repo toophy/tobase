@@ -1,5 +1,7 @@
 package behaviortree
 
+import "encoding/json"
+
 // 控制节点
 //   1. 串行节点
 //   2. 并行节点
@@ -102,4 +104,55 @@ func (n *Node) PopNode(c INode) bool {
 	}
 
 	return ret
+}
+
+// UnmarshalJSON 反序列化JSON为对象
+func (n *Node) UnmarshalJSON(b []byte) error {
+	var objMap map[string]*json.RawMessage
+	err := json.Unmarshal(b, &objMap)
+	if err != nil {
+		return err
+	}
+	var rawMessagesForColoredThings []*json.RawMessage
+	err = json.Unmarshal(*objMap["Childs"], &rawMessagesForColoredThings)
+	if err != nil {
+		return err
+	}
+
+	n.Childs = make([]INode, len(rawMessagesForColoredThings))
+
+	for index, rawMessage := range rawMessagesForColoredThings {
+		var m map[string]interface{}
+		err = json.Unmarshal(*rawMessage, &m)
+		if err != nil {
+			return err
+		}
+
+		p := gNodeCreators[m["type"].(string)]()
+		err := json.Unmarshal(*rawMessage, &p)
+		if err != nil {
+			return err
+		}
+
+		n.Childs[index] = p
+	}
+
+	return nil
+}
+
+type funcCreateNode func() INode // 声明了一个函数类型
+var gNodeCreators map[string]funcCreateNode
+
+func init() {
+	if gNodeCreators == nil {
+		gNodeCreators = make(map[string]funcCreateNode, 0)
+	}
+}
+
+// AppendNodeCreator 附加一个节点创建函数
+func AppendNodeCreator(name string, f func() INode) {
+	if gNodeCreators == nil {
+		gNodeCreators = make(map[string]funcCreateNode, 0)
+	}
+	gNodeCreators[name] = f
 }

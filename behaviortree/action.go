@@ -4,6 +4,10 @@ import (
 	"fmt"
 )
 
+func init() {
+	AppendNodeCreator("Action", func() INode { return new(Action) })
+}
+
 // Action 动作:叶子
 // -------------------------------------------------------------
 type Action struct {

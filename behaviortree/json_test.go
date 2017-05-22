@@ -106,7 +106,6 @@ func (ce *ColorfulEcosystem) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	// Let's add a place to store our de-serialized Plant and Animal structs
 	ce.Things = make([]ColoredThing, len(rawMessagesForColoredThings))
 
 	var m map[string]string
@@ -116,37 +115,15 @@ func (ce *ColorfulEcosystem) UnmarshalJSON(b []byte) error {
 			return err
 		}
 
-		// Depending on the type, we can run json.Unmarshal again on the same byte slice
-		// But this time, we'll pass in the appropriate struct instead of a map
-		// if m["type"] == "plant" {
-		// 	var p Plant
-		// 	err := json.Unmarshal(*rawMessage, &p)
-		// 	if err != nil {
-		// 		return err
-		// 	}
-		// 	// After creating our struct, we should save it
-		// 	ce.Things[index] = &p
-		// } else if m["type"] == "animal" {
-		// 	var a Animal
-		// 	err := json.Unmarshal(*rawMessage, &a)
-		// 	if err != nil {
-		// 		return err
-		// 	}
-		// 	// After creating our struct, we should save it
-		// 	ce.Things[index] = &a
-		// } else {
-		// 	return errors.New("Unsupported type found!")
-		// }
 		p := gColorCreator[m["type"]]()
 		err := json.Unmarshal(*rawMessage, &p)
 		if err != nil {
 			return err
 		}
-		// After creating our struct, we should save it
+
 		ce.Things[index] = p
 	}
 
-	// That's it!  We made it the whole way with no errors, so we can return `nil`
 	return nil
 }
 

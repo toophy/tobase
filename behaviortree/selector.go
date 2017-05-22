@@ -1,5 +1,9 @@
 package behaviortree
 
+func init() {
+	AppendNodeCreator("Selector", func() INode { return new(Selector) })
+}
+
 // Selector 选择组合
 // -------------------------------------------------------------
 type Selector struct {

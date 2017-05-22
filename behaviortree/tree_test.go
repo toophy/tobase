@@ -1,8 +1,12 @@
 package behaviortree
 
-import "testing"
-import "encoding/json"
-import "encoding/xml"
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"os"
+	"testing"
+)
 
 //
 const (
@@ -69,25 +73,26 @@ func CreateBehaviorTree(a *Agent) *Tree {
 	return t
 }
 
+// 判断文件/文件存在
+func IsExist(filename string) bool {
+	_, err := os.Stat(filename)
+	return err == nil || os.IsExist(err)
+}
+
 func TestMonster(t *testing.T) {
 	agentA := CreateAgent("A", 100, 20, 15)
-	agentB := CreateAgent("B", 100, 25, 10)
 
 	treeA := CreateBehaviorTree(agentA)
-	treeB := CreateBehaviorTree(agentB)
 
-	treeAjson, _ := json.MarshalIndent(treeA, "", "  ")
-	println(string(treeAjson))
+	conf := "tree.json"
 
-	nTreeA := new(Tree)
-	json.Unmarshal(treeAjson, nTreeA)
+	b, _ := ioutil.ReadFile("./doc/" + conf)
+	err := json.Unmarshal(b, &treeA)
+	if err != nil {
+		fmt.Printf("init scs %s", err.Error())
+	}
 
-	treeAJson2, _ := json.MarshalIndent(nTreeA, "", "  ")
-	println(string(treeAJson2))
-
-	treeBjson, _ := json.MarshalIndent(treeB, "", "  ")
-	println(string(treeBjson))
-
-	treeAXml, _ := xml.MarshalIndent(treeA, "", "  ")
-	println(string(treeAXml))
+	treeAJSON, _ := json.MarshalIndent(treeA, "", "  ")
+	println(string(treeAJSON))
+	ioutil.WriteFile("heh.json", treeAJSON, 0)
 }

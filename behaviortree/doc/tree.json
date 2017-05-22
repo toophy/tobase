@@ -1,37 +1,47 @@
 	{
 	  "Childs": [
 	    {
+				"type": "Sequence",
 	      "Childs": [
 	        {
+						"type": "CondAttr",
 	          "Name": "血量低",
 	          "AttrIdx": 1,
 	          "Operator": 2,
 	          "Value": 10
 	        },
 	        {
+						"type": "CondAttrCompare",
 	          "Name": "血量压制",
 	          "AttrIdx": 1,
 	          "Operator": 1,
 	          "Value": 50
 	        },
 	        {
+						"type": "Action",
 	          "Name": "逃离"
 	        }
 	      ]
 	    },
 	    {
+				"type": "Sequence",
 	      "Childs": [
 	        {
+						"type": "CondAttrCompare",
 	          "Name": "目标超出攻击范围",
+						"AttrIdx": 0,
 	          "Operator": 2,
 	          "Value": 10
 	        },
 	        {
+						"type": "CondAttrCompare",
 	          "Name": "目标在追击范围",
+						"AttrIdx": 0,
 	          "Operator": 1,
 	          "Value": 30
 	        },
 	        {
+						"type": "Action",
 	          "Name": "追击"
 	        }
 	      ]

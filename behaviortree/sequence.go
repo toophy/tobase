@@ -1,5 +1,9 @@
 package behaviortree
 
+func init() {
+	AppendNodeCreator("Sequence", func() INode { return new(Sequence) })
+}
+
 // Sequence 顺序组合
 // -------------------------------------------------------------
 type Sequence struct {
