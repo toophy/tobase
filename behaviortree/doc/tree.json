@@ -56,4 +56,66 @@
 	      ]
 	    }
 	  ]
-	}
+	},
+
+	{
+  "behavior": {
+    "-name": "selectorprobabilityBT",
+    "-agenttype": "FirstAgent",
+    "-version": "5",
+    "node": {
+      "-class": "SelectorProbability",
+      "-id": "0",
+      "node": [
+        {
+          "-class": "DecoratorWeight",
+          "-id": "4",
+          "property": [
+            { "-DecorateWhenChildEnds": "false" },
+            { "-Weight": "const int 20" }
+          ],
+          "node": {
+            "-class": "Action",
+            "-id": "1",
+            "property": [
+              { "-Method": "Self.FirstAgent::Say(\"A\")" },
+              { "-ResultOption": "BT_SUCCESS" }
+            ]
+          }
+        },
+        {
+          "-class": "DecoratorWeight",
+          "-id": "5",
+          "property": [
+            { "-DecorateWhenChildEnds": "false" },
+            { "-Weight": "const int 30" }
+          ],
+          "node": {
+            "-class": "Action",
+            "-id": "2",
+            "property": [
+              { "-Method": "Self.FirstAgent::Say(\"B\")" },
+              { "-ResultOption": "BT_SUCCESS" }
+            ]
+          }
+        },
+        {
+          "-class": "DecoratorWeight",
+          "-id": "6",
+          "property": [
+            { "-DecorateWhenChildEnds": "false" },
+            { "-Weight": "const int 50" }
+          ],
+          "node": {
+            "-class": "Action",
+            "-id": "3",
+            "property": [
+              { "-Method": "Self.FirstAgent::Say(\"C\")" },
+              { "-ResultOption": "BT_SUCCESS" }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

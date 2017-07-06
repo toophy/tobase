@@ -1,7 +1,67 @@
 {
-  "ID": 100000,
-  "Childs": [
-    null,
-    null
-  ]
+  "behavior": {
+    "-name": "demo_running",
+    "-agenttype": "CBTPlayer",
+    "-version": "5",
+    "node": {
+      "-class": "DecoratorLoop",
+      "-id": "0",
+      "property": [
+        {
+          "-Count": "const int 3"
+        },
+        {
+          "-DecorateWhenChildEnds": "true"
+        },
+        {
+          "-DoneWithinFrame": "false"
+        }
+      ],
+      "node": {
+        "-class": "Sequence",
+        "-id": "1",
+        "node": [
+          {
+            "-class": "Condition",
+            "-id": "2",
+            "property": [
+              {
+                "-Operator": "Equal"
+              },
+              {
+                "-Opl": "Self.CBTPlayer::Condition()"
+              },
+              {
+                "-Opr": "const bool true"
+              }
+            ]
+          },
+          {
+            "-class": "Action",
+            "-id": "3",
+            "property": [
+              {
+                "-Method": "Self.CBTPlayer::Action1()"
+              },
+              {
+                "-ResultOption": "BT_INVALID"
+              }
+            ]
+          },
+          {
+            "-class": "Action",
+            "-id": "4",
+            "property": [
+              {
+                "-Method": "Self.CBTPlayer::Action3()"
+              },
+              {
+                "-ResultOption": "BT_INVALID"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
 }
